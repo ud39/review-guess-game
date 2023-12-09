@@ -1,0 +1,7 @@
+<section class="guess">
+  @for (review of reviews; track review.id) {
+  <app-review-card [review]="review" />
+  } @empty {
+  <p>Opps something went wrong</p>
+  }
+</section>

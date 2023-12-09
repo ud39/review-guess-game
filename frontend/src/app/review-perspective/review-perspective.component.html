@@ -1,0 +1,11 @@
+<section class="review">
+  <h1>{{ score }}</h1>
+
+  @if (reviews.length > 0) { @for (review of reviews; track review.id) {
+  <app-review-card [review]="review" />
+  } @empty {
+  <p>Opps something went wrong</p>
+  }} @else {
+  <app-review-selection />
+  }
+</section>
