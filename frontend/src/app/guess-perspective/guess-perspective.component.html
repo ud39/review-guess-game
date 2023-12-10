@@ -1,7 +1,13 @@
+<h1>Guesser</h1>
 <section class="guess">
-  @for (review of reviews; track review.id) {
-  <app-review-card [review]="review" />
-  } @empty {
-  <p>Opps something went wrong</p>
+  <h2><app-score /></h2>
+  @if (reviews.length > 0) {
+  <ol class="pins">
+    @for (review of reviews; track review.id) {
+    <app-review-card [review]="review" />
+    }
+  </ol>
+  } @else {
+  <p>Oops something went wrong</p>
   }
 </section>

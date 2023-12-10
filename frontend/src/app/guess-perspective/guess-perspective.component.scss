@@ -1,0 +1,29 @@
+@import url("../debugger.css");
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  grid-area: perspective;
+  grid-column-start: 1;
+  margin: auto;
+}
+
+:host > h1 {
+  align-self: center;
+}
+
+:host > section {
+  display: inherit;
+  flex-direction: inherit;
+  align-items: center;
+}
+
+ol {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+ol > app-review-card:hover {
+}
