@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { interval, takeWhile } from 'rxjs';
 
 @Component({
   selector: 'app-score',
@@ -7,10 +8,14 @@ import { Component } from '@angular/core';
   templateUrl: './score.component.html',
   styleUrl: './score.component.scss',
 })
-export class ScoreComponent {
-  score: number = 0;
+export class ScoreComponent implements OnInit, OnDestroy {
+  score: number = 69;
 
-  increaseScore(diffculty: number) {
-    this.score += 20 * diffculty;
-  }
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {}
+
+  increaseScore(diffculty: number) {}
+
+  decreaseScore(diffculty: number) {}
 }
