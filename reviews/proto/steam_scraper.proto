@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package scraper_steamreviews;
+
+service SteamService {
+  rpc GetAppId (GameNameRequest) returns (AppInfoResponse);
+  rpc GetAppTitle (AppIdRequest) returns (AppInfoResponse);
+  rpc GetReviews (AppIdRequest) returns (ReviewsResponse);
+  rpc GetNReviews (NReviewsRequest) returns (ReviewsWithTitleResponse);
+  rpc GetNAppIds (NAppIdsRequest) returns (AppIdsResponse);
+}
+
+message GameNameRequest {
+  string game_name = 1;
+}
+
+message AppIdRequest {
+  string app_id = 1;
+}
+
+message NReviewsRequest {
+  string app_id = 1;
+  int32 n = 2;
+}
+
+message NAppIdsRequest {
+  int32 n = 1;
+  string filter_by = 2;
+}
+
+message AppInfoResponse {
+  string app_id = 1;
+  string title = 2;
+}
+
+message ReviewsResponse {
+  repeated Review review = 1;
+}
+
+message ReviewsWithTitleResponse {
+  string title = 1;
+  repeated Review review = 2;
+}
+
+message Review {
+  string steam_id = 1;
+  string review = 2;
+  bool voted_up = 3;
+  int32 votes_up = 4;
+  int32 votes_funny = 5;
+  int32 playtime_forever = 6;
+}
+
+message AppIdsResponse {
+  repeated string app_id = 1;
+}
