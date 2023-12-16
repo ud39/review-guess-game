@@ -123,4 +123,3 @@ def resp_filtered(resp, title):
     return document_filtered
 
 
-print(get_app_id("Dishonored"))
