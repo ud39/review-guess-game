@@ -1,10 +1,12 @@
 import express, { Express, Response } from "express";
 import path from "path";
 import {
+  AppIdRequest,
   AppInfoResponse,
   GameNameRequest,
-  SteamService,
+  NReviewsRequest,
 } from "./steam_scraper";
+import { GrpcPromiseFactory, SteamServicePythonGrpc } from "./scraper";
 
 const protoLoader = require("@grpc/proto-loader");
 const grpc = require("@grpc/grpc-js");
@@ -15,13 +17,6 @@ const packageDefinitionRec = protoLoader.loadSync(
   path.join(__dirname, "../../reviews/proto/steam_scraper.proto"),
 );
 const steamScraperProto = grpc.loadPackageDefinition(packageDefinitionRec);
-
-type SteamServicePythonGrpc = {
-  [K in keyof SteamService]: (
-    request: Parameters<SteamService[K]>[0],
-    callback: (error: any, response: ReturnType<SteamService[K]>) => void,
-  ) => ReturnType<SteamService[K]>;
-};
 
 const steamScraperStub: SteamServicePythonGrpc =
   new steamScraperProto.scraper_steamreviews.SteamService(
@@ -48,6 +43,11 @@ const promisifiedGetAppId = (
 
 const request1: GameNameRequest = { gameName: "Hades" };
 const request2: GameNameRequest = { gameName: "Cyberpunk 2077" };
+const request3: AppIdRequest = { appId: "205100" };
+const request4: NReviewsRequest = { appId: "205100", n: 10 };
+const fac = new GrpcPromiseFactory(steamScraperStub);
+const getReviews = fac.createPromisifiedMethod("GetReviews");
+const getNReviews = fac.createPromisifiedMethod("GetNReviews");
 
 // Use the promisified function for multiple asynchronous calls
 
@@ -58,6 +58,9 @@ promisifiedGetAppId(request1)
 promisifiedGetAppId(request2)
   .then((response) => console.log("Response 2:", response))
   .catch((error) => console.error("Error 2:", error));
+
+getReviews(request3).then((response) => console.log("GetReviews:", response));
+getNReviews(request4).then((response) => console.log("GetNReviews:", response));
 
 app.get("/", (_, res: Response) => {
   res.send("Express + TypeScript Server");

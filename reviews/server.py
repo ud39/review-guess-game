@@ -20,13 +20,30 @@ class SteamServicer(SteamServiceServicer):
 
     def GetReviews(self, request, context):
         app_id = request.app_id
-        reviews = get_reviews(app_id)
+        response = get_reviews(app_id)
+        reviews = response['reviews']
+        reviews = [Review(
+            steam_id=review['author']['steamid'],
+            review=review['review'],
+            voted_up=review['voted_up'],
+            votes_up=review['votes_up'],
+            votes_funny=review['votes_funny'],
+            playtime_forever=review['author']['playtime_forever']
+            ) for review in reviews]
         return ReviewsResponse(review=reviews)
 
     def GetNReviews(self, request, context):
         app_id = request.app_id
         n = request.n
         reviews, title = get_n_reviews(app_id, n)
+        reviews = [Review(
+            steam_id=review['author']['steamid'],
+            review=review['review'],
+            voted_up=review['voted_up'],
+            votes_up=review['votes_up'],
+            votes_funny=review['votes_funny'],
+            playtime_forever=review['author']['playtime_forever']
+        ) for review in reviews]
         return ReviewsWithTitleResponse(title=title, review=reviews)
 
     def GetNAppIds(self, request, context):
@@ -41,6 +58,7 @@ def serve():
     server.add_insecure_port('[::]:50051')
     server.start()
     server.wait_for_termination()
+
 
 if __name__ == '__main__':
     print(f"Starting server on 50051")
