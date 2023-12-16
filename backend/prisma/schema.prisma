@@ -11,28 +11,21 @@ datasource db {
 }
 
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+model Game {
+  appId Int @id 
+  title String
+  reviews Review[]
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+model Review {
+  steamId         Int 
+  game            Game @relation(fields: [appId], references: [appId])
+  appId           Int
+  review          String
+  votedUp         Boolean
+  votesUp         Int
+  votesFunny      Int
+  playtimeForever Int
+  @@id([steamId, appId])
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
-}
