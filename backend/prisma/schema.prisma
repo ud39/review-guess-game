@@ -29,3 +29,7 @@ model Review {
   @@id([steamId, appId])
 }
 
+model Genre {
+  id          Int @id
+  description String
+}
