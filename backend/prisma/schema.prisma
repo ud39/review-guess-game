@@ -12,21 +12,21 @@ datasource db {
 
 
 model Game {
-  appId Int @id 
+  app_id Int @id 
   title String
   reviews Review[]
 }
 
 model Review {
-  steamId         Int 
-  game            Game @relation(fields: [appId], references: [appId])
-  appId           Int
+  steam_id         BigInt 
+  game            Game @relation(fields: [app_id], references: [app_id])
+  app_id           Int
   review          String
-  votedUp         Boolean
-  votesUp         Int
-  votesFunny      Int
-  playtimeForever Int
-  @@id([steamId, appId])
+  voted_up         Boolean
+  votes_up         Int
+  votes_funny      Int
+  playtime_forever Int
+  @@id([steam_id, app_id])
 }
 
 model Genre {
