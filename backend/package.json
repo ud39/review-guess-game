@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
     "start": "node dist/server.js",
-    "dev": "concurrently \"npx tsc --watch\" \"wait-on dist/server.js && npm run start\""
+    "dev": "concurrently \"nodemon server.ts\" \"npx tsc --watch\""
   },
   "keywords": [],
   "author": "",
@@ -26,8 +26,8 @@
     "@types/pg": "^8.10.9",
     "concurrently": "^8.2.2",
     "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
     "ts-proto": "^1.165.1",
-    "typescript": "^5.3.2",
-    "wait-on": "^7.2.0"
+    "typescript": "^5.3.2"
   }
 }
