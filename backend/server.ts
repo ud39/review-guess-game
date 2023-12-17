@@ -1,6 +1,5 @@
 import express, { Express, Response } from "express";
-import { insertGameWithReviews } from "./databaseactions";
-import { AppIdRequest, GameNameRequest } from "./steam_scraper";
+import { selectReviews } from "./databaseactions";
 
 const app: Express = express();
 const PORT = process.env["PORT"] || 3000;
@@ -13,7 +12,4 @@ app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 });
 
-const request1: GameNameRequest = { gameName: "Dishonored" };
-const request2: AppIdRequest = { appId: "205100" };
-
-insertGameWithReviews(request1, request2);
+selectReviews("Dishonored", 2);

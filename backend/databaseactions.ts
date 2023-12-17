@@ -13,7 +13,7 @@ const protoLoader = require("@grpc/proto-loader");
 const grpc = require("@grpc/grpc-js");
 
 const packageDefinitionRec = protoLoader.loadSync(
-  path.join(__dirname, "../../reviews/proto/steam_scraper.proto"),
+  path.join(__dirname, "../reviews/proto/steam_scraper.proto"),
 );
 const steamScraperProto = grpc.loadPackageDefinition(packageDefinitionRec);
 const steamScraperStub: SteamServicePythonGrpc =
@@ -27,6 +27,28 @@ const getAppId = grpcPromiseFactory.createPromisifiedMethod("GetAppId");
 const getReviews = grpcPromiseFactory.createPromisifiedMethod("GetReviews");
 
 const prisma = new PrismaClient();
+
+export async function selectReviews(
+  gameTitle: string,
+  numberOfReviews: number,
+) {
+  try {
+    const game = await prisma.game.findFirst({ where: { title: gameTitle } });
+    if (!game)
+      throw Error(
+        `The game: ${gameTitle} is not in the database or don't exits'`,
+      );
+
+    const reviews = await prisma.review.findMany({
+      where: { app_id: game.app_id },
+      take: numberOfReviews,
+    });
+
+    console.log(reviews);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 async function insertGameAndReviews(
   appInfoResp: AppInfoResponse,
