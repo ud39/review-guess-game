@@ -23,7 +23,7 @@ class SteamServicer(SteamServiceServicer):
         response = get_reviews(app_id)
         reviews = response['reviews']
         reviews = [Review(
-            steam_id=review['author']['steamid'],
+            steam_id=int(review['author']['steamid']),
             review=review['review'],
             voted_up=review['voted_up'],
             votes_up=review['votes_up'],
@@ -37,7 +37,7 @@ class SteamServicer(SteamServiceServicer):
         n = request.n
         reviews, title = get_n_reviews(app_id, n)
         reviews = [Review(
-            steam_id=review['author']['steamid'],
+            steam_id=int(review['author']['steamid']),
             review=review['review'],
             voted_up=review['voted_up'],
             votes_up=review['votes_up'],
