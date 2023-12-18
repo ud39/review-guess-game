@@ -61,8 +61,8 @@ async function insertGameAndReviews(
       steam_id: Number(review.steamId),
       review: review.review,
       voted_up: review.votedUp,
-      votes_up: 0,
-      votes_funny: 0,
+      votes_up: review.votesUp || 0,
+      votes_funny: review.votesFunny || 0,
       playtime_forever: review.playtimeForever,
     }));
 
@@ -93,8 +93,8 @@ async function addReviews(
     steam_id: Number(review.steamId),
     review: review.review,
     voted_up: review.votedUp,
-    votes_up: 0,
-    votes_funny: 0,
+    votes_up: review.votesUp || 0,
+    votes_funny: review.votesFunny || 0,
     playtime_forever: review.playtimeForever,
   }));
 
