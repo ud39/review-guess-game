@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Review } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 import {
   AppIdRequest,
@@ -31,7 +31,7 @@ const prisma = new PrismaClient();
 export async function selectReviews(
   gameTitle: string,
   numberOfReviews: number,
-) {
+): Promise<Review[]> {
   try {
     const game = await prisma.game.findFirst({ where: { title: gameTitle } });
     if (!game)
@@ -45,8 +45,10 @@ export async function selectReviews(
     });
 
     console.log(reviews);
+    return reviews;
   } catch (error) {
     console.error(error);
+    return [];
   }
 }
 
