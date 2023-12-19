@@ -1,5 +1,16 @@
 import requests
+from bs4 import Tag, NavigableString
+from typing import Union
 from bs4 import BeautifulSoup
+
+
+# TODO: Add better way to ensure soup find return tag type for linter
+
+def checkIfTag(elem: Union[Tag, NavigableString, None]) -> Tag:
+    if elem is None or isinstance(elem, NavigableString):
+        raise ValueError(f'Find returned {type(elem)} and not Tag')
+
+    return elem
 
 
 def get_app_id(game_name):
@@ -11,8 +22,8 @@ def get_app_id(game_name):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     try:
-        app_id = soup.find(class_='search_result_row')['data-ds-appid']
-        title = soup.find(class_='title').contents[0]
+        app_id = checkIfTag(soup.find(class_='search_result_row'))['data-ds-appid']
+        title = checkIfTag(soup.find(class_='title')).contents[0]
     except Exception as e:
         raise e
 
@@ -27,7 +38,7 @@ def get_app_title(app_id):
                             headers={'User-Agent': 'Mozilla/5.0'})
     soup = BeautifulSoup(response.text, 'html.parser')
     try:
-        title = soup.find(class_='apphub_AppName').contents[0]
+        title = checkIfTag(soup.find(class_='apphub_AppName')).contents[0]
     except Exception as e:
         raise e
 
@@ -112,4 +123,3 @@ def resp_filtered(resp, title):
     return document_filtered
 
 
-print(get_app_id("Dishonored"))
