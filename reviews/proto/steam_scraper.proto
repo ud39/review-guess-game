@@ -43,7 +43,7 @@ message ReviewsWithTitleResponse {
 }
 
 message Review {
-  int64 steam_id = 1;
+  string steam_id = 1;
   string review = 2;
   bool voted_up = 3;
   int32 votes_up = 4;
