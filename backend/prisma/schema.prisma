@@ -18,10 +18,10 @@ model Game {
 }
 
 model Review {
-  steam_id         BigInt 
-  game            Game @relation(fields: [app_id], references: [app_id])
+  steam_id         String 
+  game             Game @relation(fields: [app_id], references: [app_id])
   app_id           Int
-  review          String
+  review           String
   voted_up         Boolean
   votes_up         Int
   votes_funny      Int
@@ -33,3 +33,4 @@ model Genre {
   id          Int @id
   description String
 }
+

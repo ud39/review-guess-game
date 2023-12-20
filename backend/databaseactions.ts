@@ -58,7 +58,7 @@ async function insertGameAndReviews(
 ): Promise<void> {
   try {
     const reviews = reviewsResp.review.map((review) => ({
-      steam_id: Number(review.steamId),
+      steam_id: review.steamId,
       review: review.review,
       voted_up: review.votedUp,
       votes_up: review.votesUp || 0,
