@@ -1,0 +1,33 @@
+.placeholder-wrapper {
+  max-width: 300px;
+}
+
+.placeholder-wrapper div {
+  position: relative;
+  background: #dddddd;
+  padding-bottom: 100%;
+}
+
+.shimmer {
+  overflow: hidden;
+  position: relative;
+}
+
+.shimmer::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background: red;
+  animation: shimmer 1s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

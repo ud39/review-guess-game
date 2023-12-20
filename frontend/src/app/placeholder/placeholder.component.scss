@@ -1,0 +1,40 @@
+.placeholder-wrapper {
+  max-width: 250px;
+  width: 200px;
+}
+
+.placeholder-wrapper div {
+  position: relative;
+  background: #dddddd;
+  border-radius: 12px;
+  padding-bottom: 100%;
+}
+
+.shimmer {
+  overflow: hidden;
+  position: relative;
+}
+
+.shimmer::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
