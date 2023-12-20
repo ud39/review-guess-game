@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ReviewPerspectiveComponent } from './review-perspective/review-perspective.component';
 import { GuessPerspectiveComponent } from './guess-perspective/guess-perspective.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { GuessPerspectiveComponent } from './guess-perspective/guess-perspective
     RouterOutlet,
     GuessPerspectiveComponent,
     ReviewPerspectiveComponent,
+    HttpClientModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
