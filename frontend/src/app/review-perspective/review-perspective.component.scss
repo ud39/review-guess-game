@@ -1,0 +1,24 @@
+@import url("../debugger.css");
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  grid-area: perspective;
+  grid-column-start: 1;
+  margin: auto;
+}
+
+:host > h1,
+.score {
+  align-self: center;
+}
+
+:host section {
+  display: inherit;
+  flex-direction: column;
+}
+
+app-placeholder {
+  margin: auto;
+}

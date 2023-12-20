@@ -1,11 +1,13 @@
+<h1>Reviewer</h1>
 <section class="review">
-  <h1>{{ score }}</h1>
-
+  <h2 class="score">{{ score }}</h2>
+  <h3>Choose Reviews For Your Opponent</h3>
   @if (reviews.length > 0) { @for (review of reviews; track review.id) {
   <app-review-card [review]="review" />
+  <app-review-selection />
   } @empty {
   <p>Opps something went wrong</p>
   }} @else {
-  <app-review-selection />
+  <app-placeholder />
   }
 </section>
