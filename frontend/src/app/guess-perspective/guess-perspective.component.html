@@ -3,7 +3,7 @@
   <h2><app-score /></h2>
   @if (reviews.length > 0) {
   <ol class="pins">
-    @for (review of reviews; track review.id) {
+    @for (review of reviews; track review.steam_id) {
     <app-review-card [review]="review" />
     }
   </ol>

@@ -1,17 +1,16 @@
 export interface Review {
-  id: number;
-  title: string;
-  text: string;
-  recommend: boolean;
-  played_hours: number;
-  helpful: number;
-  funny: number;
+  steam_id: string;
+  review: string;
+  playtime_forever: number;
+  voted_up: boolean;
+  votes_up: number;
+  votes_funny: number;
 }
 
 export type DIFFCUILTY = 1 | 2 | 3;
 
 export type User = {
   cached: boolean;
-  role: 'guesser' | 'delayer';
+  role: 'guesser' | 'reviewer';
   score: number;
 };
