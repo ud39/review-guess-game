@@ -2,12 +2,16 @@
 <section class="review">
   <h2 class="score">{{ score }}</h2>
   <h3>Choose Reviews For Your Opponent</h3>
-  @if (reviews.length > 0) { @for (review of reviews; track review.id) {
-  <app-review-card [review]="review" />
+  @if (reviews.length > 0) {
+  <section>
+    @for (review of reviews; track review.steam_id) {
+    <app-review-card [review]="review" />
+    } @empty {
+    <p>Opps something went wrong</p>
+    }
+  </section>
   <app-review-selection />
-  } @empty {
-  <p>Opps something went wrong</p>
-  }} @else {
+  } @else {
   <app-placeholder />
   }
 </section>

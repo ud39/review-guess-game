@@ -10,13 +10,19 @@
 }
 
 :host > h1,
-.score {
+.score,
+:host > section > h3 {
   align-self: center;
 }
 
-:host section {
+:host > section {
   display: inherit;
   flex-direction: column;
+}
+
+section:has(app-review-card) {
+  display: inherit;
+  flex-direction: row;
 }
 
 app-placeholder {
