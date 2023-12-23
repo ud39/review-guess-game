@@ -28,6 +28,8 @@ const getReviews = grpcPromiseFactory.createPromisifiedMethod("GetReviews");
 
 const prisma = new PrismaClient();
 
+export async function availableGames() {}
+
 export async function selectReviews(
   gameTitle: string,
   numberOfReviews: number,
@@ -50,6 +52,22 @@ export async function selectReviews(
     console.error(error);
     return [];
   }
+}
+
+export async function selectInitialReviews(): Promise<Review[]> {
+  const gameResults: Array<Prisma.GameCreateManyInput> =
+    await prisma.$queryRaw`SELECT * FROM "Game" ORDER BY "app_id" LIMIT 1`;
+
+  if (gameResults.length === 0) throw Error("Database has no games");
+
+  const game = gameResults[0]!;
+
+  const reviews = prisma.review.findMany({
+    where: { app_id: game.app_id },
+    take: 5,
+  });
+
+  return reviews;
 }
 
 async function insertGameAndReviews(
