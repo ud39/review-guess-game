@@ -24,6 +24,8 @@ export class ReviewPerspectiveComponent implements OnInit {
   constructor(private fetchReviewService: FetchReviewsService) {}
 
   ngOnInit(): void {
-    this.fetchReviewService.testCall().subscribe((resp) => console.log(resp));
+    this.fetchReviewService
+      .getInitialReviews()
+      .subscribe((resp) => console.log((this.reviews = resp.reviews)));
   }
 }

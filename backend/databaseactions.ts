@@ -1,4 +1,4 @@
-import { PrismaClient, Review } from "@prisma/client";
+import { Game, PrismaClient, Review } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 import {
   AppIdRequest,
@@ -54,7 +54,10 @@ export async function selectReviews(
   }
 }
 
-export async function selectInitialReviews(): Promise<Review[]> {
+export async function selectInitialReviews(): Promise<{
+  game: Game;
+  reviews: Review[];
+}> {
   const gameResults: Array<Prisma.GameCreateManyInput> =
     await prisma.$queryRaw`SELECT * FROM "Game" ORDER BY "app_id" LIMIT 1`;
 
@@ -62,12 +65,12 @@ export async function selectInitialReviews(): Promise<Review[]> {
 
   const game = gameResults[0]!;
 
-  const reviews = prisma.review.findMany({
+  const reviews = await prisma.review.findMany({
     where: { app_id: game.app_id },
     take: 5,
   });
 
-  return reviews;
+  return { game: game, reviews: reviews };
 }
 
 async function insertGameAndReviews(
