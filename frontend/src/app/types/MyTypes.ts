@@ -7,6 +7,11 @@ export interface Review {
   votes_funny: number;
 }
 
+export interface Game {
+  title: string;
+  app_id: number;
+}
+
 export type DIFFCUILTY = 1 | 2 | 3;
 
 export type User = {

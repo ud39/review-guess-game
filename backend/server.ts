@@ -37,8 +37,7 @@ app.get(
 app.get("/initialreviews", async (req: Request, res: Response) => {
   console.log(req, res);
   const gameWithReviews = await selectInitialReviews();
-  console.log(gameWithReviews);
-  return gameWithReviews;
+  res.send(gameWithReviews);
 });
 
 app.listen(PORT, () => {
