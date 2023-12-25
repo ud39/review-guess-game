@@ -1,9 +1,13 @@
-<section class="review-card">
-  <h3 class="recommend">{{ review?.voted_up }}</h3>
+<section class="review-card" tabindex="0">
+  <h3 class="recommend">
+    {{ review?.voted_up ? "Thumbs Up" : "Thumps Down" }}
+  </h3>
   <p class="text">{{ review?.review }}</p>
   <ul class="pins">
-    <li>{{ review?.playtime_forever }}</li>
-    <li>{{ review?.votes_up }}</li>
-    <li>{{ review?.votes_funny }}</li>
+    <li>{{ review?.playtime_forever }} ⏳</li>
+    <li>{{ review?.votes_up }} 👍</li>
+    @if (review?.votes_funny !== 0) {
+    <li>{{ review?.votes_funny }} 😂</li>
+    } @else { }
   </ul>
 </section>
