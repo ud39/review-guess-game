@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  QueryList,
+  AfterViewInit,
+} from '@angular/core';
 import { Review } from '../types/MyTypes';
 import { ReviewCardComponent } from '../review-card/review-card.component';
 import { ReviewSelectionComponent } from '../review-selection/review-selection.component';
@@ -17,15 +23,23 @@ import { PlaceholderComponent } from '../placeholder/placeholder.component';
   styleUrl: './review-perspective.component.scss',
   providers: [FetchReviewsService],
 })
-export class ReviewPerspectiveComponent implements OnInit {
+export class ReviewPerspectiveComponent implements OnInit, AfterViewInit {
   score: number = 0;
   reviews: Review[] = [];
+  @ViewChildren(ReviewCardComponent)
+  reviewCards!: QueryList<ReviewCardComponent>;
 
   constructor(private fetchReviewService: FetchReviewsService) {}
 
   ngOnInit(): void {
     this.fetchReviewService
       .getInitialReviews()
-      .subscribe((resp) => console.log((this.reviews = resp.reviews)));
+      .subscribe((resp) => (this.reviews = resp.reviews));
+  }
+
+  ngAfterViewInit(): void {
+    const defaultFocusCard =
+      this.reviewCards.toArray()[Math.floor(this.reviewCards.length / 2)];
+    defaultFocusCard.reviewCard.nativeElement.focus();
   }
 }
