@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-review-selection',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './review-selection.component.html',
   styleUrl: './review-selection.component.scss',
 })
-export class ReviewSelectionComponent {}
+export class ReviewSelectionComponent implements OnInit {
+  numberOfSelectedReviews: number = 0;
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {}
+}
