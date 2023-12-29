@@ -1,9 +1,9 @@
 <section>
-  <button id="left">Left</button>
+  <button id="left" (click)="left()">Left</button>
   <section>
     <button>Retry</button>
     <input type="text" placeholder="Select Game" id="game-selection" />
   </section>
-  <button name="right">Right</button>
+  <button name="right" (click)="right()">Right</button>
   <p id="reviews-selected">{{ numberOfSelectedReviews }}</p>
 </section>

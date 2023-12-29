@@ -26,4 +26,64 @@ export class ReviewSelectionComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {}
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'ArrowLeft') this.left();
+    if (event.key === 'ArrowRight') this.right();
+  }
+
+  left(): void {
+    combineLatest([
+      this.reviewSelectionService.reviewCards$,
+      this.reviewSelectionService.focusedReviewCard$,
+    ])
+      .pipe(
+        take(1),
+        map(([reviews, focusReview]) => {
+          const focusReviewSteamId = focusReview?.review?.steam_id;
+          if (!focusReviewSteamId) return;
+
+          const currentIndex = reviews.findIndex(
+            (review) => review.review?.steam_id === focusReviewSteamId,
+          );
+
+          const nextIndex =
+            (currentIndex - 1 + reviews.length) % reviews.length;
+          return reviews[nextIndex];
+        }),
+      )
+      .subscribe((focusedReview) => {
+        if (focusedReview === undefined) return;
+        focusedReview?.setFocus();
+        this.reviewSelectionService.setFocusReviewCard(focusedReview);
+      });
+  }
+
+  right(): void {
+    combineLatest([
+      this.reviewSelectionService.reviewCards$,
+      this.reviewSelectionService.focusedReviewCard$,
+    ])
+      .pipe(
+        take(1),
+        map(([reviews, focusReview]) => {
+          const focusReviewSteamId = focusReview?.review?.steam_id;
+          if (!focusReviewSteamId) return;
+
+          const currentIndex = reviews.findIndex(
+            (review) => review.review?.steam_id === focusReviewSteamId,
+          );
+
+          const nextIndex =
+            (currentIndex + 1 + reviews.length) % reviews.length;
+          return reviews[nextIndex];
+        }),
+      )
+      .subscribe((focusedReview) => {
+        if (focusedReview === undefined) return;
+        focusedReview?.setFocus();
+        this.reviewSelectionService.setFocusReviewCard(focusedReview);
+      });
+  }
 }
