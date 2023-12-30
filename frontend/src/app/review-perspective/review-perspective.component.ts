@@ -48,4 +48,8 @@ export class ReviewPerspectiveComponent implements OnInit, AfterViewInit {
     this.reviewSelectionService.setReviewCards(this.reviewCards.toArray());
     this.reviewSelectionService.setFocusReviewCard(defaultFocusCard);
   }
+
+  handleCardClick(clickedCard: ReviewCardComponent): void {
+    this.reviewSelectionService.setFocusReviewCard(clickedCard);
+  }
 }

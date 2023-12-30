@@ -5,7 +5,10 @@
   @if (reviews.length > 0) {
   <section>
     @for (review of reviews; track review.steam_id) {
-    <app-review-card [review]="review" />
+    <app-review-card
+      [review]="review"
+      (clickReviewCard)="handleCardClick($event)"
+    />
     } @empty {
     <p>Opps something went wrong</p>
     }
