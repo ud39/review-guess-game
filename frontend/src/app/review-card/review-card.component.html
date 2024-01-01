@@ -1,4 +1,10 @@
-<section #reviewCard class="review-card" tabindex="0" (click)="clickedCard()">
+<section
+  #reviewCard
+  [ngClass]="{ selected: selected }"
+  class="review-card"
+  tabindex="0"
+  (click)="clickedCard()"
+>
   <h3 class="recommend">
     {{ review?.voted_up ? "Thumbs Up" : "Thumps Down" }}
   </h3>

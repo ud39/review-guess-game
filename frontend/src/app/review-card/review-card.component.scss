@@ -14,6 +14,14 @@ section.review-card:focus {
   background: red;
 }
 
+section.review-card.selected {
+  opacity: 0.5;
+}
+
+section.review-card.selected:focus {
+  opacity: 1;
+}
+
 .text {
   text-wrap: wrap;
   text-align: left;

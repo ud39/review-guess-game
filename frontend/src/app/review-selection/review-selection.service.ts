@@ -15,6 +15,8 @@ export class ReviewSelectionService {
   focusedReviewCard$: Observable<ReviewCardComponent | null> =
     this.focusedReviewCardSubject.asObservable();
 
+  selectedReviewCards: ReviewCardComponent[] = [];
+
   constructor() {}
 
   setReviewCards(reviewCards: ReviewCardComponent[]) {
@@ -23,5 +25,19 @@ export class ReviewSelectionService {
 
   setFocusReviewCard(reviewCard: ReviewCardComponent) {
     this.focusedReviewCardSubject.next(reviewCard);
+  }
+
+  addReviewCard(reviewCard: ReviewCardComponent) {
+    if (this.selectedReviewCards.length == 3) {
+      throw Error('Too many Cards deselect a Card please');
+    }
+    this.selectedReviewCards.push(reviewCard);
+  }
+
+  removeReviewCard(selectedReviewCard: ReviewCardComponent) {
+    this.selectedReviewCards = this.selectedReviewCards.filter(
+      (reviewCard) =>
+        reviewCard.review?.steam_id !== selectedReviewCard.review?.steam_id,
+    );
   }
 }

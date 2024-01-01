@@ -31,6 +31,14 @@ export class ReviewSelectionComponent implements OnInit, AfterViewInit {
   handleKeyDown(event: KeyboardEvent): void {
     if (event.key === 'ArrowLeft') this.left();
     if (event.key === 'ArrowRight') this.right();
+    if (event.key === 'Enter') {
+      this.reviewSelectionService.focusedReviewCard$
+        .pipe(take(1))
+        .subscribe((reviewCard) => {
+          if (reviewCard === null) throw Error('What');
+          this.setCard(reviewCard);
+        });
+    }
   }
 
   left(): void {
@@ -85,5 +93,17 @@ export class ReviewSelectionComponent implements OnInit, AfterViewInit {
         focusedReview?.setFocus();
         this.reviewSelectionService.setFocusReviewCard(focusedReview);
       });
+  }
+
+  async setCard(selectedReview: ReviewCardComponent) {
+    if (selectedReview.selected) {
+      this.reviewSelectionService.removeReviewCard(selectedReview);
+      selectedReview.setSelected();
+      this.numberOfSelectedReviews--;
+    } else {
+      this.reviewSelectionService.addReviewCard(selectedReview);
+      selectedReview.setSelected();
+      this.numberOfSelectedReviews++;
+    }
   }
 }
