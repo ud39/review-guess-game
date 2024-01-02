@@ -5,6 +5,7 @@ import {
   QueryList,
   AfterViewInit,
   inject,
+  ViewChild,
 } from '@angular/core';
 import { Review } from '../types/MyTypes';
 import { ReviewCardComponent } from '../review-card/review-card.component';
@@ -12,6 +13,7 @@ import { ReviewSelectionComponent } from '../review-selection/review-selection.c
 import { FetchReviewsService } from '../fetch-reviews/fetch-reviews.service';
 import { PlaceholderComponent } from '../placeholder/placeholder.component';
 import { ReviewSelectionService } from '../review-selection/review-selection.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-review-perspective',
@@ -32,6 +34,8 @@ export class ReviewPerspectiveComponent implements OnInit, AfterViewInit {
   reviews: Review[] = [];
   @ViewChildren(ReviewCardComponent)
   reviewCards!: QueryList<ReviewCardComponent>;
+  @ViewChild(ReviewSelectionComponent)
+  reviewSelection!: ReviewSelectionComponent;
 
   constructor(private fetchReviewService: FetchReviewsService) {}
 
@@ -50,6 +54,18 @@ export class ReviewPerspectiveComponent implements OnInit, AfterViewInit {
   }
 
   handleCardClick(clickedCard: ReviewCardComponent): void {
+    this.reviewSelectionService.focusedReviewCard$
+      .pipe(take(1))
+      .subscribe((focusedReviewCard) => {
+        if (focusedReviewCard === null) {
+          throw Error('Here is a good text that informs the user');
+        }
+        if (
+          focusedReviewCard.review?.steam_id === clickedCard.review?.steam_id
+        ) {
+          this.reviewSelection.setCard(focusedReviewCard);
+        }
+      });
     this.reviewSelectionService.setFocusReviewCard(clickedCard);
   }
 }
