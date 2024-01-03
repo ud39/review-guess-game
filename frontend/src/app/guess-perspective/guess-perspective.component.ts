@@ -3,11 +3,12 @@ import { ReviewCardComponent } from '../review-card/review-card.component';
 import { Review } from '../types/MyTypes';
 import { ScoreComponent } from '../score/score.component';
 import { FetchReviewsService } from '../fetch-reviews/fetch-reviews.service';
+import { GuessInputComponent } from '../guess-input/guess-input.component';
 
 @Component({
   selector: 'app-guess-perspective',
   standalone: true,
-  imports: [ReviewCardComponent, ScoreComponent],
+  imports: [ReviewCardComponent, ScoreComponent, GuessInputComponent],
   providers: [FetchReviewsService],
   templateUrl: './guess-perspective.component.html',
   styleUrl: './guess-perspective.component.scss',

@@ -1,4 +1,5 @@
-@if (!!user?.cached) {
+<button (click)="changePerspective()">Change Perspective</button>
+@if (guesserReviewer) {
 <main>
   <app-guess-perspective />
 </main>

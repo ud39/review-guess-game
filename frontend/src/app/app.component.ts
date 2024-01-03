@@ -22,4 +22,9 @@ import { HttpClientModule } from '@angular/common/http';
 export class AppComponent {
   title = 'GuessTheGame';
   user: User | undefined;
+  guesserReviewer: boolean = true;
+
+  changePerspective() {
+    this.guesserReviewer = !this.guesserReviewer;
+  }
 }
