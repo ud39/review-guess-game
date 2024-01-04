@@ -1,0 +1,16 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+
+form label {
+  text-transform: uppercase;
+}
+
+form input[type="text"] {
+  border-radius: 8px;
+  border: 1px solid gray;
+}
