@@ -1,4 +1,11 @@
-<form>
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
   <label for="guess">Game</label>
-  <input #gameGuess type="text" id="guess" />
+  <input
+    #gameGuess
+    ngModel
+    type="text"
+    id="guess"
+    name="guess"
+    #guess="ngModel"
+  />
 </form>

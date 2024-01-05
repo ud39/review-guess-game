@@ -1,21 +1,24 @@
+import { FormsModule, NgForm } from '@angular/forms';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-guess-input',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './guess-input.component.html',
   styleUrl: './guess-input.component.scss',
 })
 export class GuessInputComponent {
   @ViewChild('gameGuess') gameGuess!: ElementRef;
+  guess: string = '';
 
   @HostListener('window:keydown.enter', ['event'])
-  handleKeyDown(event: KeyboardEvent) {
+  handleKeyDown() {
     this.gameGuess.nativeElement.focus();
-    if (this.gameGuess.nativeElement === document.activeElement) {
-      this.gameGuess.nativeElement.value = '';
-    }
-    event.preventDefault();
+  }
+
+  //TODO Add FuzzySearch
+  onSubmit(f: NgForm) {
+    f.resetForm();
   }
 }

@@ -8,10 +8,9 @@ describe('GuessInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GuessInputComponent]
-    })
-    .compileComponents();
-    
+      imports: [GuessInputComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GuessInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
