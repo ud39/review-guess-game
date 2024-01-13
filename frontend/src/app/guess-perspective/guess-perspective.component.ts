@@ -1,10 +1,12 @@
 import {
+  OnInit,
   Component,
   Input,
   ViewChildren,
   QueryList,
   inject,
   HostListener,
+  AfterViewInit,
 } from '@angular/core';
 import { ReviewCardComponent } from '../review-card/review-card.component';
 import { Review } from '../types/MyTypes';
@@ -13,7 +15,6 @@ import { FetchReviewsService } from '../fetch-reviews/fetch-reviews.service';
 import { GuessInputComponent } from '../guess-input/guess-input.component';
 import { TimerComponent } from '../timer/timer.component';
 import { ReviewSelectionService } from '../review-selection/review-selection.service';
-import { take, combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-guess-perspective',
@@ -28,7 +29,7 @@ import { take, combineLatest, map } from 'rxjs';
   templateUrl: './guess-perspective.component.html',
   styleUrl: './guess-perspective.component.scss',
 })
-export class GuessPerspectiveComponent {
+export class GuessPerspectiveComponent implements OnInit, AfterViewInit {
   private reviewSelectionService = inject(ReviewSelectionService);
   @Input() reviews: Review[] = [
     {
@@ -58,22 +59,55 @@ export class GuessPerspectiveComponent {
   ];
   isLoading: boolean = true;
 
+  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    this.reviewCards.toArray()[1].setFocus();
+  }
+
   @ViewChildren(ReviewCardComponent)
   reviewCards!: QueryList<ReviewCardComponent>;
+  focusedCard: ReviewCardComponent | undefined;
 
   constructor() {}
-
-  handleCardClick(clickedCard: ReviewCardComponent): void {}
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
     if (event.key === 'ArrowLeft') this.left();
     if (event.key === 'ArrowRight') this.right();
     if (event.key === 'Enter') {
+      this.focusedCard = this.getCurrentFocusedCard();
     }
   }
 
-  left(): void {}
+  getCurrentFocusedCard() {
+    return (
+      this.reviewCards.filter(
+        (review) => review.reviewCard.nativeElement === document.activeElement,
+      )[0] || this.focusedCard
+    );
+  }
 
-  right(): void {}
+  left(): void {
+    const focusedCard = this.getCurrentFocusedCard();
+    const currentIndex = this.reviewCards
+      .toArray()
+      .findIndex(
+        (review) => review.review?.steam_id === focusedCard.review?.steam_id,
+      );
+    const arrayLength = this.reviewCards.length;
+    const nextIndex = (currentIndex - 1 + arrayLength) % arrayLength;
+    this.reviewCards.toArray()[nextIndex].setFocus();
+  }
+
+  right(): void {
+    const focusedCard = this.getCurrentFocusedCard();
+    const currentIndex = this.reviewCards
+      .toArray()
+      .findIndex(
+        (review) => review.review?.steam_id === focusedCard.review?.steam_id,
+      );
+    const arrayLength = this.reviewCards.length;
+    const nextIndex = (currentIndex + 1) % arrayLength;
+    this.reviewCards.toArray()[nextIndex].setFocus();
+  }
 }
