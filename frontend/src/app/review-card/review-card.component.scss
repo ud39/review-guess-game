@@ -18,6 +18,10 @@ section.review-card.selected {
   opacity: 0.5;
 }
 
+section.review-card.viewed {
+  opacity: 0.1;
+}
+
 section.review-card.selected:focus {
   opacity: 1;
 }

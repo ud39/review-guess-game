@@ -23,6 +23,7 @@ export class ReviewCardComponent implements OnInit, AfterViewInit {
   @Input() review: Review | undefined;
   @ViewChild('reviewCard') reviewCard!: ElementRef;
   selected: boolean = false;
+  viewed: boolean = false;
   ngOnInit(): void {}
   ngAfterViewInit(): void {}
   setFocus() {
@@ -31,6 +32,14 @@ export class ReviewCardComponent implements OnInit, AfterViewInit {
 
   setSelected() {
     this.selected = !this.selected;
+  }
+
+  setCurrentViewedCard() {
+    this.viewed = true;
+  }
+
+  removeViewedCard() {
+    this.viewed = false;
   }
 
   clickedCard(): void {

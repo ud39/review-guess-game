@@ -62,6 +62,7 @@ export class GuessPerspectiveComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
   ngAfterViewInit(): void {
     this.reviewCards.toArray()[1].setFocus();
+    this.focusedCard = this.getCurrentFocusedCard();
   }
 
   @ViewChildren(ReviewCardComponent)
@@ -76,6 +77,7 @@ export class GuessPerspectiveComponent implements OnInit, AfterViewInit {
     if (event.key === 'ArrowRight') this.right();
     if (event.key === 'Enter') {
       this.focusedCard = this.getCurrentFocusedCard();
+      this.focusedCard?.setCurrentViewedCard();
     }
   }
 
@@ -88,6 +90,7 @@ export class GuessPerspectiveComponent implements OnInit, AfterViewInit {
   }
 
   left(): void {
+    this.focusedCard?.removeViewedCard();
     const focusedCard = this.getCurrentFocusedCard();
     const currentIndex = this.reviewCards
       .toArray()
@@ -100,6 +103,7 @@ export class GuessPerspectiveComponent implements OnInit, AfterViewInit {
   }
 
   right(): void {
+    this.focusedCard?.removeViewedCard();
     const focusedCard = this.getCurrentFocusedCard();
     const currentIndex = this.reviewCards
       .toArray()
