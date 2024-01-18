@@ -59,15 +59,15 @@ export class GuessPerspectiveComponent implements OnInit, AfterViewInit {
   ];
   isLoading: boolean = true;
 
-  ngOnInit(): void {}
-  ngAfterViewInit(): void {
-    this.reviewCards.toArray()[1].setFocus();
-    this.focusedCard = this.getCurrentFocusedCard();
-  }
-
   @ViewChildren(ReviewCardComponent)
   reviewCards!: QueryList<ReviewCardComponent>;
   focusedCard: ReviewCardComponent | undefined;
+
+  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    this.reviewCards.toArray()[1].setFocus();
+    this.focusedCard = this.reviewCards.toArray()[1];
+  }
 
   constructor() {}
 
