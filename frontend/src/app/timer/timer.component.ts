@@ -3,9 +3,10 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
-  afterNextRender,
+  afterRender,
+  ChangeDetectorRef,
 } from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, take } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
@@ -15,16 +16,28 @@ import { interval } from 'rxjs';
   styleUrl: './timer.component.scss',
 })
 export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
-  countDownTime: number = 90;
+  TIME_LIMIT: number = 90;
+  timePassed: number = 0;
+  timeLeft: number | string = this.TIME_LIMIT;
 
-  constructor() {
-    afterNextRender(() => {
-      interval(1000).subscribe(() => console.log(2));
-    });
+  constructor() {}
+
+  ngOnInit(): void {
+    this.formatTimeLeft();
   }
-
-  ngOnInit(): void {}
 
   ngOnDestroy(): void {}
   ngAfterViewInit(): void {}
+
+  formatTimeLeft() {
+    const minutes = Math.floor(this.TIME_LIMIT / 60);
+    let seconds: string | number = this.TIME_LIMIT % 60;
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+
+    this.timeLeft = `${minutes}:${seconds}`;
+  }
+
+  startTimer(): void {}
 }
