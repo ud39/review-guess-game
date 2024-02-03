@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  AfterViewInit,
-  afterRender,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { interval, take } from 'rxjs';
 
 @Component({
@@ -39,5 +32,19 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.timeLeft = `${minutes}:${seconds}`;
   }
 
-  startTimer(): void {}
+  startTimer(): void {
+    let countDownTime = this.TIME_LIMIT;
+    interval(1000)
+      .pipe(take(this.TIME_LIMIT))
+      .subscribe(() => {
+        countDownTime--;
+        const minutes = Math.floor(countDownTime / 60);
+        let seconds: string | number = countDownTime % 60;
+        if (seconds < 10) {
+          seconds = `0${seconds}`;
+        }
+
+        this.timeLeft = `${minutes}:${seconds}`;
+      });
+  }
 }
