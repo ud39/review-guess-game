@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
 import { interval, take } from 'rxjs';
 
 @Component({
@@ -13,14 +15,16 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
   timePassed: number = 0;
   timeLeft: number | string = this.TIME_LIMIT;
 
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
     this.formatTimeLeft();
   }
 
   ngOnDestroy(): void {}
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.startTimer();
+  }
 
   formatTimeLeft() {
     const minutes = Math.floor(this.TIME_LIMIT / 60);
@@ -33,18 +37,20 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   startTimer(): void {
-    let countDownTime = this.TIME_LIMIT;
-    interval(1000)
-      .pipe(take(this.TIME_LIMIT))
-      .subscribe(() => {
-        countDownTime--;
-        const minutes = Math.floor(countDownTime / 60);
-        let seconds: string | number = countDownTime % 60;
-        if (seconds < 10) {
-          seconds = `0${seconds}`;
-        }
+    if (isPlatformBrowser(this.platformId)) {
+      let countDownTime = this.TIME_LIMIT;
+      interval(1000) // Adjusted to one second interval
+        .pipe(take(this.TIME_LIMIT))
+        .subscribe(() => {
+          countDownTime--;
+          const minutes = Math.floor(countDownTime / 60);
+          let seconds: string | number = countDownTime % 60;
+          if (seconds < 10) {
+            seconds = `0${seconds}`;
+          }
 
-        this.timeLeft = `${minutes}:${seconds}`;
-      });
+          this.timeLeft = `${minutes}:${seconds}`;
+        });
+    }
   }
 }
