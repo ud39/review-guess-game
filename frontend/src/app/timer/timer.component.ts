@@ -13,7 +13,7 @@ import { interval, take } from 'rxjs';
 export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
   TIME_LIMIT: number = 90;
   timePassed: number = 0;
-  remainingPathColor: string = 'blue';
+  remainingPathColor: string = 'remainingPathColor';
   timeLeft: number | string = this.TIME_LIMIT;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
