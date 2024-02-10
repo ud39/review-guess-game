@@ -13,6 +13,8 @@ import { interval, take } from 'rxjs';
 export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
   TIME_LIMIT: number = 90;
   timePassed: number = 0;
+  FULL_DASH_ARRAY: number = 283;
+  currentDashArray: number = 0;
   remainingPathColor: string = 'remainingPathColor';
   timeLeft: number | string = this.TIME_LIMIT;
 
@@ -37,20 +39,33 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.timeLeft = `${minutes}:${seconds}`;
   }
 
+  calculateTimeFraction(): number {
+    return Number(this.timePassed) / this.TIME_LIMIT;
+  }
+
+  setCircleDasharray() {
+    this.currentDashArray = this.calculateTimeFraction() * this.FULL_DASH_ARRAY;
+    console.log(this.timePassed);
+    console.log(this.currentDashArray);
+  }
+
   startTimer(): void {
     if (isPlatformBrowser(this.platformId)) {
       let countDownTime = this.TIME_LIMIT;
+      let passedTime = countDownTime;
       interval(1000) // Adjusted to one second interval
         .pipe(take(this.TIME_LIMIT))
         .subscribe(() => {
-          countDownTime--;
-          const minutes = Math.floor(countDownTime / 60);
-          let seconds: string | number = countDownTime % 60;
+          passedTime--;
+          this.timePassed++;
+          const minutes = Math.floor(passedTime / 60);
+          let seconds: string | number = passedTime % 60;
           if (seconds < 10) {
             seconds = `0${seconds}`;
           }
 
           this.timeLeft = `${minutes}:${seconds}`;
+          this.setCircleDasharray();
         });
     }
   }

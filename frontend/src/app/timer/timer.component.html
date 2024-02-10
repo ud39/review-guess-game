@@ -4,7 +4,7 @@
       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
       <path
         id="base-timer-path-remaining"
-        [style.stroke-dasharray]="'283'"
+        [style.stroke-dasharray]="currentDashArray + ' 283'"
         [className]="'base-timer__path-remaining ' + remainingPathColor"
         d="
           M 50 50
