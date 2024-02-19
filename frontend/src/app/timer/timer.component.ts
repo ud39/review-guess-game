@@ -14,8 +14,12 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
   TIME_LIMIT: number = 90;
   timePassed: number = 0;
   FULL_DASH_ARRAY: number = 283;
+  WARNING_THRESHOLD: number = 10;
+  ALERT_THRESHOLD: number = 5;
   currentDashArray: number = 0;
-  remainingPathColor: string = 'remainingPathColor';
+  start = true;
+  warning = false;
+  alert = false;
   timeLeft: number | string = this.TIME_LIMIT;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
@@ -45,8 +49,11 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   setCircleDasharray() {
     this.currentDashArray = this.calculateTimeFraction() * this.FULL_DASH_ARRAY;
-    console.log(this.timePassed);
-    console.log(this.currentDashArray);
+  }
+
+  setPathColor() {
+    if (this.timePassed > 60 && this.timePassed < 90) this.warning = true;
+    if (this.timePassed <= 90 && this.timePassed >= 75) this.alert = true;
   }
 
   startTimer(): void {
@@ -66,6 +73,7 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.timeLeft = `${minutes}:${seconds}`;
           this.setCircleDasharray();
+          this.setPathColor();
         });
     }
   }

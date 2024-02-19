@@ -5,7 +5,10 @@
       <path
         id="base-timer-path-remaining"
         [style.stroke-dasharray]="currentDashArray + ' 283'"
-        [className]="'base-timer__path-remaining ' + remainingPathColor"
+        [className]="'base-timer__path-remaining'"
+        [class.pathColor]="start"
+        [class.pathColorWarning]="warning"
+        [class.pathColorAlert]="alert"
         d="
           M 50 50
           m -45, 0

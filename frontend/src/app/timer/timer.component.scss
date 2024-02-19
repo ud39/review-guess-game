@@ -66,10 +66,19 @@ circle.base-timer__path-elapsed {
   stroke: currentColor;
 }
 
-.remainingPathColor {
+.base-timer__svg {
+  /* Flips the svg and makes the animation to move left-to-right */
+  transform: scaleX(-1);
+}
+
+.pathColor {
   color: green;
 }
 
-.remainingPathColorWarning {
+.pathColorWarning {
+  color: orange;
+}
+
+.pathColorAlert {
   color: red;
 }
