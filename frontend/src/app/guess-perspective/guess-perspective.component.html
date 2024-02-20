@@ -1,7 +1,9 @@
 <h1>Guesser</h1>
-<app-timer />
+<section>
+  <app-score />
+  <app-timer />
+</section>
 <section class="guess">
-  <h2><app-score /></h2>
   @if (reviews.length > 0) {
   <ol class="pins">
     @for (review of reviews; track review.steam_id) {
