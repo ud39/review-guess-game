@@ -17,10 +17,10 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
   WARNING_THRESHOLD: number = 10;
   ALERT_THRESHOLD: number = 5;
   currentDashArray: number = 0;
+  timeLeft: number | string = this.TIME_LIMIT;
   start = true;
   warning = false;
   alert = false;
-  timeLeft: number | string = this.TIME_LIMIT;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -52,8 +52,17 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setPathColor() {
-    if (this.timePassed > 60 && this.timePassed < 90) this.warning = true;
-    if (this.timePassed <= 90 && this.timePassed >= 75) this.alert = true;
+    if (
+      this.timePassed > Math.ceil(this.TIME_LIMIT * 0.75) &&
+      this.timePassed < Math.ceil(this.TIME_LIMIT * 0.9)
+    )
+      this.warning = true;
+
+    if (
+      this.timePassed <= this.TIME_LIMIT &&
+      this.timePassed >= Math.ceil(this.TIME_LIMIT * 0.9)
+    )
+      this.alert = true;
   }
 
   startTimer(): void {
