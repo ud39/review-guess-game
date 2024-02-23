@@ -59,8 +59,8 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.warning = true;
 
     if (
-      this.timePassed <= this.TIME_LIMIT &&
-      this.timePassed >= Math.ceil(this.TIME_LIMIT * 0.9)
+      this.timePassed >= Math.ceil(this.TIME_LIMIT * 0.9) ||
+      this.timePassed > this.TIME_LIMIT
     )
       this.alert = true;
   }
